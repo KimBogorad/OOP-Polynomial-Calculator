@@ -13,5 +13,4 @@ abstract class Scalar {
     \\helper methods:
     public abstract Scalar addToInteger(int number)
     public abstract Scalar addToRational(int numerator, int denominator)
-    public Rational
 }
