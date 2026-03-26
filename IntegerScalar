@@ -11,18 +11,38 @@ public class IntegerScalar extends Scalar {
     }
 
     public abstract Scalar mul(Scalar s) {
-
+        
     }
-    public abstract Scalar neg() 
-    public abstract Scalar power(int exponent) 
+    public abstract Scalar neg() {
+        return IntergerScalar(-this.number);
+    }
+    public abstract Scalar power(int exponent) {
+        return IntegerScalar(Math.pow(this.number, exponent));
+    }
     public abstract int sign()
+    {
+        return this.number >= 0 ? (this.number == 0 ? 0 : 1) : -1;
+    }
 
     @Override
     public abstract boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!o.instanceOf(IntegerScalar)) return false;
+        IntegerScalar other = IntegerScalar(o);
+        return this.number = other.number;
+    }
     @Override
-    public abstract String toString()
+    public abstract String toString() {
+        
+    }
 
     //helper methods:
-    
+    public Scalar addToInteger(int number) {
+        return new Scalar(this.number + number);
+    }
+    public Scalar addToRational(int numerator, int denominator) {
+        return new Scalar((this.number * denominator) + numerator, denominator);
+    }
 }
 
