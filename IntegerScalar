@@ -1,0 +1,28 @@
+public class IntegerScalar extends Scalar {
+    private int number;
+
+    //methods:
+    public IntegerScalar(int number) {
+        this.number = number;
+    }
+
+    public Scalar add(Scalar s) {
+        s.addToInteger(this.number);
+    }
+
+    public abstract Scalar mul(Scalar s) {
+
+    }
+    public abstract Scalar neg() 
+    public abstract Scalar power(int exponent) 
+    public abstract int sign()
+
+    @Override
+    public abstract boolean equals(Object o)
+    @Override
+    public abstract String toString()
+
+    //helper methods:
+    
+}
+
