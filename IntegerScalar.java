@@ -10,22 +10,25 @@ public class IntegerScalar extends Scalar {
         s.addToInteger(this.number);
     }
 
-    public abstract Scalar mul(Scalar s) {
-        
+    public Scalar mul(Scalar s) {
+        return new IntegerScalar(this.number); \\placeholder!!
     }
-    public abstract Scalar neg() {
-        return IntergerScalar(-this.number);
+
+    public Scalar neg() {
+        return IntegerScalar(-this.number);
     }
-    public abstract Scalar power(int exponent) {
+
+    public Scalar power(int exponent) {
         return IntegerScalar(Math.pow(this.number, exponent));
     }
-    public abstract int sign()
+
+    public int sign()
     {
         return this.number >= 0 ? (this.number == 0 ? 0 : 1) : -1;
     }
 
     @Override
-    public abstract boolean equals(Object o)
+    public boolean equals(Object o)
     {
         if (this == o) return true;
         if (!o.instanceOf(IntegerScalar)) return false;
@@ -33,8 +36,8 @@ public class IntegerScalar extends Scalar {
         return this.number = other.number;
     }
     @Override
-    public abstract String toString() {
-        
+    public String toString() {
+        String s = String.valueOf(this.number);
     }
 
     //helper methods:
