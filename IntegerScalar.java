@@ -1,53 +1,76 @@
 public class IntegerScalar extends Scalar {
     private int number;
 
-    //methods:
     public IntegerScalar(int number) {
         this.number = number;
     }
 
+    @Override
     public Scalar add(Scalar s) {
-        s.addToInteger(this.number);
-        Scalar ret = s;
-        return ret;
+        return s.addToInteger(this);
     }
 
+    @Override
     public Scalar mul(Scalar s) {
-        return new IntegerScalar(this.number); //placeholder!!
+        return s.mulInteger(this);
     }
 
+    @Override
     public Scalar neg() {
         return new IntegerScalar(-this.number);
     }
 
+    @Override
     public Scalar power(int exponent) {
         return new IntegerScalar((int)Math.pow(this.number, exponent));
     }
 
+    @Override
     public int sign()
     {
-        return this.number >= 0 ? (this.number == 0 ? 0 : 1) : -1;
+        return Integer.compare(this.number, 0);
     }
 
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (!o.instanceOf(IntegerScalar) return false;
-        IntegerScalar other = IntegerScalar(o);
-        return this.number = other.number;
-    }
-    @Override
-    public String toString() {
-        String s = String.valueOf(this.number);
+        if (this == o){
+            return true;
+        }
+        if (!(o instanceof IntegerScalar)){
+            return false;
+        }
+        IntegerScalar other = (IntegerScalar)o;
+        return this.number == other.number;
     }
 
-    //helper methods:
-    public Scalar addToInteger(int number) {
-        return new Scalar(this.number + number);
+    @Override
+    public String toString() {
+        return Integer.toString(this.number);
     }
-    public Scalar addToRational(int numerator, int denominator) {
-        return new Scalar((this.number * denominator) + numerator, denominator);
+
+    @Override
+    public Scalar addToInteger(IntegerScalar s) {
+        return new IntegerScalar(this.number + s.number);
+    }
+
+    @Override
+    public Scalar addToRational(RationalScalar s) {
+        return new RationalScalar((this.number * s.getDenominator()) + s.getNumerator(), s.getDenominator()).reduce();
+    }
+
+    @Override
+    public Scalar mulInteger(IntegerScalar s) {
+        return new IntegerScalar(this.number * s.number);
+    }
+
+    @Override
+    public Scalar mulRational(RationalScalar s) {
+        return new RationalScalar(this.number * s.getDenominator(), s.getDenominator()).reduce();
+    }
+    
+    public int getNumber(){
+        return this.number;
     }
 }
 

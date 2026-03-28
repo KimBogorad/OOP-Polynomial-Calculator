@@ -11,6 +11,8 @@ public abstract class Scalar {
     public abstract String toString();
 
     //helper methods:
-    public abstract Scalar addToInteger(int number);
-    public abstract Scalar addToRational(int numerator, int denominator);
+    public abstract Scalar addToInteger(IntegerScalar s);
+    public abstract Scalar addToRational(RationalScalar s);
+    public abstract Scalar mulInteger(IntegerScalar s);
+    public abstract Scalar mulRational(RationalScalar s);
 }
