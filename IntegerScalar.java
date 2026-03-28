@@ -8,18 +8,20 @@ public class IntegerScalar extends Scalar {
 
     public Scalar add(Scalar s) {
         s.addToInteger(this.number);
+        Scalar ret = s;
+        return ret;
     }
 
     public Scalar mul(Scalar s) {
-        return new IntegerScalar(this.number); \\placeholder!!
+        return new IntegerScalar(this.number); //placeholder!!
     }
 
     public Scalar neg() {
-        return IntegerScalar(-this.number);
+        return new IntegerScalar(-this.number);
     }
 
     public Scalar power(int exponent) {
-        return IntegerScalar(Math.pow(this.number, exponent));
+        return new IntegerScalar((int)Math.pow(this.number, exponent));
     }
 
     public int sign()
@@ -31,7 +33,7 @@ public class IntegerScalar extends Scalar {
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (!o.instanceOf(IntegerScalar)) return false;
+        if (!o.instanceOf(IntegerScalar) return false;
         IntegerScalar other = IntegerScalar(o);
         return this.number = other.number;
     }
