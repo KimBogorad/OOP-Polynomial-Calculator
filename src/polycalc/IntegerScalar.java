@@ -1,3 +1,4 @@
+package polycalc;
 public class IntegerScalar extends Scalar {
     private int number;
 

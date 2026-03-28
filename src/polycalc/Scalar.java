@@ -1,3 +1,4 @@
+package polycalc;
 public abstract class Scalar {
     public abstract Scalar add(Scalar s);
     public abstract Scalar mul(Scalar s); 

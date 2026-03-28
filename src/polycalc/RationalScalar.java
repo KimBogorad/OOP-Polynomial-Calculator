@@ -1,3 +1,4 @@
+package polycalc;
 public class RationalScalar extends Scalar{
     private int numerator;
     private int denominator;

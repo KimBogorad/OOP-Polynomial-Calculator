@@ -1,3 +1,4 @@
+package polycalc;
 public class Main {
     public static void main(String[] args) {
         Scalar s1 = new IntegerScalar(5);
