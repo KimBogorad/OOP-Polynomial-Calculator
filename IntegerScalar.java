@@ -66,7 +66,7 @@ public class IntegerScalar extends Scalar {
 
     @Override
     public Scalar mulRational(RationalScalar s) {
-        return new RationalScalar(this.number * s.getDenominator(), s.getDenominator()).reduce();
+        return new RationalScalar(this.number * s.getNumerator(), s.getDenominator()).reduce();
     }
     
     public int getNumber(){

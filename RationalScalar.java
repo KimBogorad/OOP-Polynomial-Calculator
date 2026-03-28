@@ -1,7 +1,8 @@
 public class RationalScalar extends Scalar{
     private int numerator;
     private int denominator;
-    RationalScalar(int numerator,int denominator){
+    
+    public RationalScalar(int numerator,int denominator){
         int common = gcd(numerator, denominator);
         this.numerator = (denominator > 0 ? numerator : -numerator) / common;
         this.denominator = Math.abs(denominator) / common;
@@ -57,7 +58,7 @@ public class RationalScalar extends Scalar{
 
     @Override
     public Scalar neg(){
-        return new RationalScalar(-this.numerator, this.denominator);
+        return new RationalScalar(-this.numerator, this.denominator).reduce();
     }
 
     @Override 
