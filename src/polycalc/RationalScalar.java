@@ -78,6 +78,8 @@ public class RationalScalar extends Scalar{
 
     @Override
     public String toString(){
+        if (this.denominator == 1) 
+            return Integer.toString(this.numerator);
         return Integer.toString(this.numerator) + "/" + Integer.toString(this.denominator);
     }
 
