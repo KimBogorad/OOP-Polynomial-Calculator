@@ -64,6 +64,8 @@ public class RationalScalar extends Scalar{
 
     @Override 
     public Scalar power(int exponent){
+        if (exponent < 0) 
+            throw new IllegalArgumentException("exponent must be non-negative. Instead received: " + exponent);
         int newNum = (int) Math.pow(this.numerator, exponent);
         int newDen = (int) Math.pow(this.denominator, exponent);
         return new RationalScalar(newNum, newDen).reduce();

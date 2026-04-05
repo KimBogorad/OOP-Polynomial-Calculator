@@ -23,6 +23,8 @@ public class IntegerScalar extends Scalar {
 
     @Override
     public Scalar power(int exponent) {
+        if (exponent < 0) 
+            throw new IllegalArgumentException("exponent must be non-negative. Instead received: " + exponent);
         return new IntegerScalar((int)Math.pow(this.number, exponent));
     }
 
