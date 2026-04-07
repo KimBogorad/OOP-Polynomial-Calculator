@@ -79,6 +79,13 @@ public class RationalScalar extends Scalar{
         return Integer.toString(this.numerator) + "/" + Integer.toString(this.denominator);
     }
 
+    public Scalar reduce() {
+        if (this.denominator == 1) {
+            return new IntegerScalar(this.numerator);
+        }
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null) {return false;}
