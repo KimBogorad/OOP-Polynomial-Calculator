@@ -37,14 +37,18 @@ public class IntegerScalar extends Scalar {
     @Override
     public boolean equals(Object o)
     {
-        if (this == o){
-            return true;
+        if (o == null) {return false;}
+        if (this == o) {return true;}
+        if (o instanceof RationalScalar) {
+            int num = ((RationalScalar)o).getNumerator();
+            int den = ((RationalScalar)o).getDenominator();
+            return (num == this.number && den == 1);
         }
-        if (!(o instanceof IntegerScalar)){
-            return false;
+        if (o instanceof IntegerScalar) {
+            IntegerScalar other = (IntegerScalar)o;
+            return this.number == other.number;
         }
-        IntegerScalar other = (IntegerScalar)o;
-        return this.number == other.number;
+        return false;  
     }
 
     @Override
@@ -59,7 +63,7 @@ public class IntegerScalar extends Scalar {
 
     @Override
     public Scalar addToRational(RationalScalar s) {
-        return new RationalScalar((this.number * s.getDenominator()) + s.getNumerator(), s.getDenominator()).reduce();
+        return new RationalScalar((this.number * s.getDenominator()) + s.getNumerator(), s.getDenominator());
     }
 
     @Override
@@ -69,7 +73,7 @@ public class IntegerScalar extends Scalar {
 
     @Override
     public Scalar mulRational(RationalScalar s) {
-        return new RationalScalar(this.number * s.getNumerator(), s.getDenominator()).reduce();
+        return new RationalScalar(this.number * s.getNumerator(), s.getDenominator());
     }
     
     public int getNumber(){
