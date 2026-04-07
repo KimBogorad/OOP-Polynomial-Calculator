@@ -72,7 +72,8 @@ public class Polynomial {
                 if (combinedMap.containsKey(exp)) {
                     Scalar existingCoeff = combinedMap.get(exp);
                     combinedMap.put(exp, existingCoeff.add(coeff));
-                } else {
+                }
+                else {
                     combinedMap.put(exp, coeff);
                 }
             }
