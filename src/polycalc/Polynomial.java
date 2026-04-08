@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Polynomial {
+public class Polynomial  {
     private Collection<Monomial> monomials;
 
     public Polynomial() {
