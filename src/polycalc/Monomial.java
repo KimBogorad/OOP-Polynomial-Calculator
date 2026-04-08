@@ -1,5 +1,7 @@
 package polycalc;
 
+import java.util.Collection;
+
 public class Monomial {
     private int exponent;
     private Scalar coefficient;
@@ -51,6 +53,15 @@ public class Monomial {
     public boolean equals(Object o) {
         if(o == null) {return false;}
         if(this == o) {return true;}
+        if (o instanceof Polynomial) {
+            Polynomial p = (Polynomial) o;
+            Collection<Monomial> other = p.getMonomials();
+            if( other.size() == 1) {
+                Monomial singleMonomial = other.iterator().next();
+                return this.equals(singleMonomial);
+            }
+            return false;
+        }
         if (!(o instanceof Monomial)) {return false;}
         return (((Monomial)o).exponent == this.exponent && ((Monomial)o).coefficient.equals(this.coefficient));
     }

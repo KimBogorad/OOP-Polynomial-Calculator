@@ -1,9 +1,8 @@
 package polycalc;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Polynomial {
     private Collection<Monomial> monomials;
@@ -35,13 +34,13 @@ public class Polynomial {
         return poly;
     }
 
-    public Polynomial add(Polynomial other){
+    public Polynomial add(Polynomial p){
         Polynomial result = new Polynomial();
-        Map<Integer, Monomial> combined = new HashMap<>();
+        Map<Integer, Monomial> combined = new TreeMap<>();
         for (Monomial m : this.monomials) {
             combined.put(m.getExponent(), m);
         }
-        for (Monomial m : other.monomials) {
+        for (Monomial m : p.monomials) {
             int exp = m.getExponent();
             if (combined.containsKey(exp)) {
                 Monomial existing = combined.get(exp);
@@ -63,7 +62,7 @@ public class Polynomial {
 
     public Polynomial mul(Polynomial p) {
         Polynomial result = new Polynomial();
-        Map<Integer, Scalar> combinedMap = new HashMap<>();
+        Map<Integer, Scalar> combinedMap = new TreeMap<>();
         for (Monomial m1 : this.monomials) {
             for (Monomial m2 : p.monomials) {
                 Monomial product = m1.mul(m2);
@@ -86,5 +85,62 @@ public class Polynomial {
             }
         }
         return result;
+    }
+
+    public Scalar evaluate(Scalar S){
+        Scalar result = new IntegerScalar(0);
+        for ( Monomial m : this.monomials) {
+            result = result.add(m.evaluate(S));
+        }
+        return result;
+    }
+
+    public Polynomial derivative(){
+        Polynomial result = new Polynomial();
+        for ( Monomial m : this.monomials) {
+            if (m.getExponent() != 0) {
+                result.monomials.add(m.derivative());
+            }
+        }
+        return result;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if (o == null) {return false;}
+        if (this == o) {return true;} 
+        if (o instanceof Monomial) {
+            if (this.monomials.size() == 1){
+                Monomial thisMonomial = this.monomials.iterator().next();
+                return thisMonomial.equals(o);
+            }
+            return false;
+        }
+        if(!(o instanceof Polynomial)){return false;}
+        Polynomial other = (Polynomial) o;
+        boolean sameSize = this.monomials.size() == other.monomials.size();
+        boolean containsAll = this.monomials.containsAll(other.monomials);
+        return (sameSize && containsAll); 
+    }
+
+    public Collection<Monomial> getMonomials(){
+        return this.monomials;
+    }
+
+    @Override
+    public String toString(){
+        String expression = "";
+        if (monomials.isEmpty()){
+            return "0";
+        }
+        boolean isFirst = true;
+        for (Monomial m: monomials){
+            if(!isFirst && m.getCoefficient().sign() > 0){
+                expression += "+";
+            }
+            expression += m.toString();
+            isFirst = false;
+        }
+        return expression;
     }
 }
