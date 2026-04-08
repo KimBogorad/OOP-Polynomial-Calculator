@@ -12,23 +12,36 @@ public class Polynomial {
     }
     
     public static Polynomial build(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return new Polynomial(); 
+        }
         Polynomial poly = new Polynomial();
-        String[] parts = input.split("\\s+");
+        String[] parts = input.trim().split("\\s+");
         for (int i = 0; i < parts.length; i++) {
             String part = parts[i];
-            Scalar scalar;
-            if (part.contains("/")) {
-                String[] ratio = part.split("/");
-                int num = Integer.parseInt(ratio[0]);
-                int den = Integer.parseInt(ratio[1]);
-                scalar = new RationalScalar(num, den);
+            try {
+                Scalar scalar;
+                if (part.contains("/")) {
+                    String[] ratio = part.split("/");
+                    if (ratio.length != 2) {
+                        throw new IllegalArgumentException("Invalid rational format: " + part);
+                    }
+                    int num = Integer.parseInt(ratio[0]);
+                    int den = Integer.parseInt(ratio[1]);
+                    scalar = new RationalScalar(num, den);
+                }
+                else {
+                    scalar = new IntegerScalar(Integer.parseInt(part));
+                }
+                if (scalar.sign() != 0) {
+                    poly.monomials.add(new Monomial(i, scalar));
+                }
             }
-            else {
-                scalar = new IntegerScalar(Integer.parseInt(part));
+            catch (NumberFormatException e) {
+                System.err.println("Error: Invalid number format at index " + i + ": " + part);
             }
-            // saving space
-            if (scalar.sign() != 0) {
-                poly.monomials.add(new Monomial(i, scalar));
+            catch (IllegalArgumentException e) {
+                System.err.println("Error: " + e.getMessage());
             }
         }
         return poly;
@@ -104,7 +117,7 @@ public class Polynomial {
         }
         return result;
     }
-    
+
     @Override
     public boolean equals(Object o){
         if (o == null) {return false;}
