@@ -75,4 +75,12 @@ public class Monomial {
         s += (this.exponent == 1) ? "x" : "x^" + this.exponent;
         return s;
     }
+
+    public int getExponent() {
+        return exponent;
+    }
+
+    public Scalar getCoefficient() {
+        return coefficient;
+    }
 }
