@@ -7,7 +7,6 @@ public class Monomial {
     private Scalar coefficient;
 
     //constructor:
-
     public Monomial(int exponent, Scalar coefficient) {
         if (exponent < 0) {
             throw new IllegalArgumentException("Exponent must be non-negative. Instead received: " + exponent);
