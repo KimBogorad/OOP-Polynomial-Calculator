@@ -75,14 +75,14 @@ public class Monomial {
             return this.coefficient.toString();
         }
         if (this.coefficient.equals(new IntegerScalar(-1))) {
-            s += "-";
+            s = "-";
         }
         else if (!(this.coefficient.equals(new IntegerScalar(1)))) {
-            boolean sign = this.coefficient.sign() == -1;
-            s += this.coefficient.toString();
+            boolean sign = (this.coefficient.sign() == -1);
+            s = this.coefficient.toString();
             if(s.contains("/"))
                 if (sign){
-                    s = "-(" + this.coefficient.neg() + ")";
+                    s = "-(" + this.coefficient.neg().toString() + ")";
                 }
                 else{
                     s = "(" + s + ")";
