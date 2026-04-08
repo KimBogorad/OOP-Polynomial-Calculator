@@ -35,6 +35,18 @@ public class TestPolynomial {
     }
 
     @Test
+    public void testPolynomialCancellation() {
+        Polynomial p1 = Polynomial.build("1 2 3");
+        Polynomial p2 = Polynomial.build("-1 -2 -3");
+        
+        Polynomial result = p1.add(p2);
+        
+        // The resulting polynomial should be completely empty and return "0"
+        assertEquals("0", result.toString());
+        assertTrue(result.getMonomials().isEmpty());
+    }
+
+    @Test
     public void testMul() {
         Polynomial p1 = new Polynomial();
         Polynomial p2 = new Polynomial();
@@ -91,5 +103,12 @@ public class TestPolynomial {
 
         assertEquals("1-2x+(3/4)x^2+5x^3", p1.toString());
         assertEquals("-2+(3/2)x+15x^2", p2.toString());
+    }
+
+    @Test
+    public void testNegativeFractionToString() {
+        Polynomial p = Polynomial.build("1 -3/4");
+        // We expect: "1-(3/4)x"  OR  "1+(-3/4)x"
+        assertEquals("1-(3/4)x", p.toString()); 
     }
 }
