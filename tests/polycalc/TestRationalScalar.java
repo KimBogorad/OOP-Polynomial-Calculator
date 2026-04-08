@@ -5,6 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestRationalScalar {
 
+    @Test
+    public void testZeroDenominatorThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new RationalScalar(5, 0);
+        });
+}
+
     //-----------Test Addition-----------
     @Test
     public void testAddTwoRationalScalars() {

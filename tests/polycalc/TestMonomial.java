@@ -6,6 +6,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestMonomial {
 
     @Test
+    public void testNegativeExponentThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Monomial(-2, new IntegerScalar(5));
+        });
+}
+
+    @Test
+    public void testAddDifferentExponentsThrowsException() {
+        Monomial m1 = new Monomial(2, new IntegerScalar(3));
+        Monomial m2 = new Monomial(3, new IntegerScalar(5));
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            m1.add(m2);
+        });
+}
+
+    @Test
     public void testAdd() {
         Monomial m1 = new Monomial(3, new IntegerScalar(3));
         Monomial m2 = new Monomial(3, new IntegerScalar(5));
