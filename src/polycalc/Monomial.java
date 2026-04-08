@@ -78,9 +78,15 @@ public class Monomial {
             s += "-";
         }
         else if (!(this.coefficient.equals(new IntegerScalar(1)))) {
+            boolean sign = this.coefficient.sign() == -1;
             s += this.coefficient.toString();
             if(s.contains("/"))
-                s = "(" + s + ")";
+                if (sign){
+                    s = "-(" + this.coefficient.neg() + ")";
+                }
+                else{
+                    s = "(" + s + ")";
+                }       
         }
         s += (this.exponent == 1) ? "x" : "x^" + this.exponent;
         return s;
