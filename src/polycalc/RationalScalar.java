@@ -94,7 +94,7 @@ public class RationalScalar extends Scalar{
             RationalScalar other = (RationalScalar) o;
             return (this.numerator == other.numerator) && (this.denominator == other.denominator);
         }
-        if(o instanceof IntegerScalar) {
+        if (o instanceof IntegerScalar) {
             int num = ((IntegerScalar)o).getNumber();
             return (this.numerator == num && this.denominator == 1);
         }
