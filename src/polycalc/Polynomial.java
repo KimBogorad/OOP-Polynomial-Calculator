@@ -54,15 +54,7 @@ public class Polynomial  {
             combined.put(m.getExponent(), m);
         }
         for (Monomial m : p.monomials) {
-            int exp = m.getExponent();
-            if (combined.containsKey(exp)) {
-                Monomial existing = combined.get(exp);
-                Monomial sum = existing.add(m);
-                combined.put(exp, sum);
-            }
-            else {
-                combined.put(exp, m);
-            }
+            combined.merge(m.getExponent(), m, Monomial::add);
         }
         for (Monomial m : combined.values()) {
             // saving space
@@ -75,26 +67,17 @@ public class Polynomial  {
 
     public Polynomial mul(Polynomial p) {
         Polynomial result = new Polynomial();
-        Map<Integer, Scalar> combinedMap = new TreeMap<>();
+        Map<Integer, Monomial> combinedMap = new TreeMap<>();
         for (Monomial m1 : this.monomials) {
             for (Monomial m2 : p.monomials) {
                 Monomial product = m1.mul(m2);
-                int exp = product.getExponent();
-                Scalar coeff = product.getCoefficient();
-                if (combinedMap.containsKey(exp)) {
-                    Scalar existingCoeff = combinedMap.get(exp);
-                    combinedMap.put(exp, existingCoeff.add(coeff));
-                }
-                else {
-                    combinedMap.put(exp, coeff);
-                }
+                combinedMap.merge(product.getExponent(), product, Monomial::add);
             }
         }
-        for (Map.Entry<Integer, Scalar> entry : combinedMap.entrySet()) {
-            Scalar finalCoeff = entry.getValue();
+        for (Monomial m : combinedMap.values()) {
             // saving space
-            if (finalCoeff.sign() != 0) {
-                result.monomials.add(new Monomial(entry.getKey(), finalCoeff));
+            if (m.sign() != 0) {
+                result.monomials.add(m);
             }
         }
         return result;
