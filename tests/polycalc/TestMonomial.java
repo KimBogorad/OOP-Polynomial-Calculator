@@ -3,6 +3,10 @@ package polycalc;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/* 
+changes relative to hw1:
+added test: testMonomialToStringWithRealScalar() to ensure RealScalar prints appropriately without getting rounded.
+*/
 public class TestMonomial {
 
     @Test
@@ -84,5 +88,12 @@ public class TestMonomial {
         assertEquals("", m.toString());
     }
 
-    
+    @Test
+    public void testMonomialToStringWithRealScalar() {
+        int ex = 2;
+        Scalar co = new RealScalar(3.1415);
+        Monomial m = new Monomial(ex, co);
+        
+        assertEquals("3.1415x^2", m.toString());
+    }
 }

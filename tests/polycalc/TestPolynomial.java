@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/* 
+changes relative to hw1:
+added test: testPolynomialToStringWithRealScalar() to ensure RealScalar prints appropriately without getting rounded.
+*/
 public class TestPolynomial {
 
     @Test
@@ -108,7 +112,11 @@ public class TestPolynomial {
     @Test
     public void testNegativeFractionToString() {
         Polynomial p = Polynomial.build("1 -3/4");
-        // We expect: "1-(3/4)x"  OR  "1+(-3/4)x"
         assertEquals("1-(3/4)x", p.toString()); 
+    }
+    @Test
+    public void testPolynomialToStringWithRealScalar() {
+        Polynomial p = Polynomial.build("1.5 2.4 5 7/5 1");
+        assertEquals("1.5+2.4x+5x^2+(7/5)x^3+x^4", p.toString()); 
     }
 }
