@@ -74,7 +74,7 @@ public class RationalScalar extends Scalar{
             return (this.numerator == num && this.denominator == 1);
         }
         if (o instanceof RealScalar) {
-            return ((RealScalar)o).getNumber() == (double)this.numerator/this.denominator;
+            return ((RealScalar)o).getNumber() == 1.0*this.numerator/this.denominator;
         }
         if (o instanceof RationalScalar) {
             RationalScalar other = (RationalScalar) o;
@@ -108,7 +108,7 @@ public class RationalScalar extends Scalar{
 
     @Override
     public Scalar addToReal(RealScalar s) {
-        double newNum = s.getNumber() + (double)this.numerator/this.denominator;
+        double newNum = s.getNumber() + 1.0*this.numerator/this.denominator;
         return new RealScalar(newNum);
     }
 
@@ -127,7 +127,7 @@ public class RationalScalar extends Scalar{
 
     @Override
     public Scalar mulReal(RealScalar s) {
-        double newNum = s.getNumber() * ((double)this.numerator/this.denominator);
+        double newNum = s.getNumber() * (1.0*this.numerator/this.denominator);
         return new RealScalar(newNum);
     }
 }

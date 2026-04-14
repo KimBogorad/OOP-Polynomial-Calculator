@@ -30,7 +30,7 @@ public class RealScalar extends Scalar {
     public Scalar power(int exponent) {
         if (exponent < 0) 
             throw new IllegalArgumentException("exponent must be non-negative. Instead received: " + exponent);
-        return new RealScalar((double)Math.pow(this.number, exponent));
+        return new RealScalar(1.0*Math.pow(this.number, exponent));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class RealScalar extends Scalar {
         if (o instanceof RationalScalar) {
             int num = ((RationalScalar)o).getNumerator();
             int den = ((RationalScalar)o).getDenominator();
-            return (this.number == (double)num/den); //עובד עם דאבל ואינט
+            return (this.number == 1.0*num/den); //עובד עם דאבל ואינט
         }
         if (o instanceof RealScalar) {
             RealScalar other = (RealScalar)o;
@@ -75,7 +75,7 @@ public class RealScalar extends Scalar {
 
     @Override
     public Scalar addToRational(RationalScalar s) {
-        double newNum = this.number + (double)s.getNumerator()/s.getDenominator();
+        double newNum = this.number + 1.0*s.getNumerator()/s.getDenominator();
         return new RealScalar(newNum);
     }
 
@@ -91,7 +91,7 @@ public class RealScalar extends Scalar {
 
     @Override
     public Scalar mulRational(RationalScalar s) {
-        return new RealScalar(this.number * ((double)s.getNumerator()/s.getDenominator()));
+        return new RealScalar(this.number * (1.0*s.getNumerator()/s.getDenominator()));
     }
 
     @Override

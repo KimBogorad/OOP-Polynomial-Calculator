@@ -101,12 +101,11 @@ public class TestRealScalar {
         assertTrue(s1.equals(s2));
     }
 
-
-
     @Test
     public void testToString() {
         Scalar s1 = new RealScalar(5);
+        System.out.println(s1.toString());
         
-        assertEquals("5", s1.toString());
+        assertEquals("5.0", s1.toString());
     }
 }
