@@ -1,4 +1,10 @@
 package polycalc;
+
+/* 
+changes relative to hw1:
+added addToReal and mulReal implementations to support the expansion of the Scalar interface
+adapted equals() method to address equality between real and rational (0.5 equals 1/2)
+*/
 public class RationalScalar extends Scalar{
     private int numerator;
     private int denominator;
@@ -21,33 +27,6 @@ public class RationalScalar extends Scalar{
     public Scalar mul(Scalar s){
         return s.mulRational(this);
     }
-
-    @Override
-    public Scalar mulRational(RationalScalar s) {
-        int newNum = s.numerator * this.numerator ;
-        int newDen = s.denominator * this.denominator;
-        return new RationalScalar(newNum, newDen);
-    }
-
-    @Override
-    public Scalar mulInteger(IntegerScalar s) {
-        int newNum = this.numerator * s.getNumber();
-        return new RationalScalar(newNum, this.denominator);
-    }
-
-    @Override
-    public Scalar addToRational(RationalScalar s) {
-        int newNum = (s.numerator * this.denominator) + (this.numerator * s.denominator);
-        int newDen = s.denominator * this.denominator;
-        return new RationalScalar(newNum, newDen);
-    }
-
-    @Override
-    public Scalar addToInteger(IntegerScalar s) {
-        int newNum = this.numerator + (s.getNumber() * this.denominator);
-        return new RationalScalar(newNum, this.denominator);
-    }
-
 
     private int gcd(int numerator,int denominator){
         return Math.abs(denominator == 0 ? numerator : gcd(denominator, numerator % denominator));
@@ -90,13 +69,16 @@ public class RationalScalar extends Scalar{
     public boolean equals(Object o) {
         if (o == null) {return false;}
         if (this == o) {return true;} 
-        if (o instanceof RationalScalar) {
-            RationalScalar other = (RationalScalar) o;
-            return (this.numerator == other.numerator) && (this.denominator == other.denominator);
-        }
         if (o instanceof IntegerScalar) {
             int num = ((IntegerScalar)o).getNumber();
             return (this.numerator == num && this.denominator == 1);
+        }
+        if (o instanceof RealScalar) {
+            return ((RealScalar)o).getNumber() == 1.0*this.numerator/this.denominator;
+        }
+        if (o instanceof RationalScalar) {
+            RationalScalar other = (RationalScalar) o;
+            return (this.numerator == other.numerator) && (this.denominator == other.denominator);
         }
         return false;
     }
@@ -107,5 +89,45 @@ public class RationalScalar extends Scalar{
 
     public int getDenominator(){
         return this.denominator;
+    }
+
+    // ------ Helper - Methods ------
+
+    @Override
+    public Scalar addToInteger(IntegerScalar s) {
+        int newNum = this.numerator + (s.getNumber() * this.denominator);
+        return new RationalScalar(newNum, this.denominator);
+    }
+
+    @Override
+    public Scalar addToRational(RationalScalar s) {
+        int newNum = (s.numerator * this.denominator) + (this.numerator * s.denominator);
+        int newDen = s.denominator * this.denominator;
+        return new RationalScalar(newNum, newDen);
+    }
+
+    @Override
+    public Scalar addToReal(RealScalar s) {
+        double newNum = s.getNumber() + 1.0*this.numerator/this.denominator;
+        return new RealScalar(newNum);
+    }
+
+     @Override
+    public Scalar mulInteger(IntegerScalar s) {
+        int newNum = this.numerator * s.getNumber();
+        return new RationalScalar(newNum, this.denominator);
+    }
+
+    @Override
+    public Scalar mulRational(RationalScalar s) {
+        int newNum = s.numerator * this.numerator ;
+        int newDen = s.denominator * this.denominator;
+        return new RationalScalar(newNum, newDen);
+    }
+
+    @Override
+    public Scalar mulReal(RealScalar s) {
+        double newNum = s.getNumber() * (1.0*this.numerator/this.denominator);
+        return new RealScalar(newNum);
     }
 }

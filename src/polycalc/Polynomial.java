@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+/* 
+changes relative to hw1:
+added condition in build's main loop to check if a coefficient is a real number.
+*/
 public class Polynomial  {
     private Collection<Monomial> monomials;
 
@@ -29,6 +33,9 @@ public class Polynomial  {
                     int num = Integer.parseInt(ratio[0]);
                     int den = Integer.parseInt(ratio[1]);
                     scalar = new RationalScalar(num, den);
+                }
+                else if (part.contains(".")) { //only change in Polynomial
+                    scalar = new RealScalar(Double.parseDouble(part));
                 }
                 else {
                     scalar = new IntegerScalar(Integer.parseInt(part));

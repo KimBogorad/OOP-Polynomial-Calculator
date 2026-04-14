@@ -3,6 +3,11 @@ package polycalc;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/* 
+changes relative to hw1:
+added tests: testAddRealScalarToRationalScalar(), testMulRealScalarToRationalScalar().
+added unit test to the adapted equals() method.
+*/
 public class TestRationalScalar {
 
     @Test
@@ -14,6 +19,13 @@ public class TestRationalScalar {
 
     //-----------Test Addition-----------
     @Test
+    public void testAddIntegerScalarToRationalScalar() {
+        Scalar i1 = new IntegerScalar(1);
+        Scalar r1 = new RationalScalar(1, 2);
+        
+        assertEquals(new RationalScalar(3,2), r1.add(i1));
+    }
+    @Test
     public void testAddTwoRationalScalars() {
         Scalar r1 = new RationalScalar(1, 2);
         Scalar r2 = new RationalScalar(4,5);
@@ -21,11 +33,11 @@ public class TestRationalScalar {
         assertEquals(new RationalScalar(13,10), r2.add(r1));
     }
     @Test
-    public void testAddIntegerScalarToRationalScalar() {
-        Scalar i1 = new IntegerScalar(1);
+    public void testAddRealScalarToRationalScalar() {
         Scalar r1 = new RationalScalar(1, 2);
-        
-        assertEquals(new RationalScalar(3,2), r1.add(i1));
+        Scalar r2 = new RealScalar(4.5);
+    
+        assertEquals(new RealScalar(5.0), r1.add(r2));
     }
     
     //-----------Test Multiplication-----------
@@ -43,7 +55,13 @@ public class TestRationalScalar {
         
         assertEquals(new RationalScalar(1,2), r1.mul(i1));
     }
-
+    @Test
+    public void testMulRealScalarToRationalScalar() {
+        Scalar r1 = new RealScalar(0.5);
+        Scalar r2 = new RationalScalar(1, 2);
+        
+        assertEquals(new RealScalar(0.25), r1.mul(r2));
+    }
     @Test
     public void testNeg(){
         RationalScalar i1 = new RationalScalar(5, 17);
@@ -73,6 +91,20 @@ public class TestRationalScalar {
 
         assertTrue(s2.equals(s3));
         assertFalse(s1.equals(s3));
+    }
+    @Test
+    public void testRationalScalarIntegerScalarEquals() {
+        Scalar s1 = new RationalScalar(6, 1);
+        Scalar s2 = new IntegerScalar(6);
+        
+        assertTrue(s1.equals(s2));
+    }
+    @Test
+    public void testRationalScalarRealScalarEquals() {
+        Scalar s1 = new RationalScalar(5, 4);
+        Scalar s2 = new RealScalar(1.25);
+
+        assertTrue(s1.equals(s2));
     }
 
     @Test

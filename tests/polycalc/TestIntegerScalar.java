@@ -3,6 +3,11 @@ package polycalc;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/* 
+changes relative to hw1:
+added unit tests to the new methods - addToReal and mulReal.
+added unit test to the adapted equals() method.
+*/
 public class TestIntegerScalar {
 
     //-----------Test Addition-----------
@@ -20,6 +25,13 @@ public class TestIntegerScalar {
         
         assertEquals(new RationalScalar(3,2), i1.add(r1));
     }
+    @Test
+    public void testAddRealScalarToIntegerScalar() {
+        Scalar i1 = new IntegerScalar(1);
+        Scalar r1 = new RealScalar(2.4756);
+        
+        assertEquals(new RealScalar(3.4756), i1.add(r1));
+    }
     //-----------Test Multiplication-----------
     @Test
     public void testMulTwoIntegerScalars() {
@@ -36,7 +48,13 @@ public class TestIntegerScalar {
         
         assertEquals(new RationalScalar(1,2), i1.mul(r1));
     }
-
+    @Test
+    public void testMulRealScalarToIntegerScalar() {
+        Scalar i1 = new IntegerScalar(5);
+        Scalar r1 = new RealScalar(4.566789);
+        
+        assertEquals(new RealScalar(22.833945), i1.mul(r1));
+    }
     @Test
     public void testNeg(){
         Scalar i1 = new IntegerScalar(5);
@@ -69,11 +87,17 @@ public class TestIntegerScalar {
         assertFalse(s3.equals(s2));
     }
 
-
     @Test
     public void testIntegerScalarRationalScalarEquals() {
         Scalar s1 = new IntegerScalar(1);
         Scalar s2 = new RationalScalar(3, 3);
+        
+        assertTrue(s1.equals(s2));
+    }
+    @Test
+    public void testIntegerScalarRealScalarEquals() {
+        Scalar s1 = new IntegerScalar(1);
+        Scalar s2 = new RealScalar(1.0);
         
         assertTrue(s1.equals(s2));
     }

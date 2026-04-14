@@ -2,42 +2,41 @@ package polycalc;
 
 /* 
 changes relative to hw1:
-added addToReal and mulReal implementations to support the expansion of the Scalar interface
-adapted equals() to address equality between int and double (2 = 2.0)
+created a new class to support the expansion of the system to real numbers.
 */
-public class IntegerScalar extends Scalar {
-    private int number;
+public class RealScalar extends Scalar {
+    private double number;
 
-    public IntegerScalar(int number) {
+    public RealScalar(double number) {
         this.number = number;
     }
 
     @Override
     public Scalar add(Scalar s) {
-        return s.addToInteger(this);
+        return s.addToReal(this);
     }
 
     @Override
     public Scalar mul(Scalar s) {
-        return s.mulInteger(this);
+        return s.mulReal(this);
     }
 
     @Override
     public Scalar neg() {
-        return new IntegerScalar(-this.number);
+        return new RealScalar(-this.number);
     }
 
     @Override
     public Scalar power(int exponent) {
         if (exponent < 0) 
             throw new IllegalArgumentException("exponent must be non-negative. Instead received: " + exponent);
-        return new IntegerScalar((int)Math.pow(this.number, exponent));
+        return new RealScalar(1.0*Math.pow(this.number, exponent));
     }
 
     @Override
     public int sign()
     {
-        return Integer.compare(this.number, 0);
+        return Double.compare(this.number, 0);
     }
 
     @Override
@@ -45,17 +44,16 @@ public class IntegerScalar extends Scalar {
     {
         if (o == null) {return false;}
         if (this == o) {return true;}
+        if(o instanceof IntegerScalar) {
+            return this.number == ((IntegerScalar)o).getNumber();
+        }
         if (o instanceof RationalScalar) {
             int num = ((RationalScalar)o).getNumerator();
             int den = ((RationalScalar)o).getDenominator();
-            return (num == this.number && den == 1);
+            return (this.number == 1.0*num/den); //עובד עם דאבל ואינט
         }
         if (o instanceof RealScalar) {
-            double num = ((RealScalar)o).getNumber();
-            return this.number == num;
-        }
-        if (o instanceof IntegerScalar) {
-            IntegerScalar other = (IntegerScalar)o;
+            RealScalar other = (RealScalar)o;
             return this.number == other.number;
         }
         return false;  
@@ -63,41 +61,42 @@ public class IntegerScalar extends Scalar {
 
     @Override
     public String toString() {
-        return Integer.toString(this.number);
+        return Double.toString(this.number);
     }
     
-    public int getNumber(){
+    public double getNumber(){
         return this.number;
     }
 
-     @Override
+    @Override
     public Scalar addToInteger(IntegerScalar s) {
-        return new IntegerScalar(this.number + s.number);
-    }
-
-    @Override
-    public Scalar addToRational(RationalScalar s) {
-        return new RationalScalar((this.number * s.getDenominator()) + s.getNumerator(), s.getDenominator());
-    }
-
-    @Override
-    public Scalar addToReal(RealScalar s) {
         return new RealScalar(this.number + s.getNumber());
     }
 
     @Override
+    public Scalar addToRational(RationalScalar s) {
+        double newNum = this.number + 1.0*s.getNumerator()/s.getDenominator();
+        return new RealScalar(newNum);
+    }
+
+    @Override
+    public Scalar addToReal(RealScalar s) {
+        return new RealScalar(this.number + s.number);
+    }
+
+    @Override
     public Scalar mulInteger(IntegerScalar s) {
-        return new IntegerScalar(this.number * s.number);
+        return new RealScalar(this.number * s.getNumber());
     }
 
     @Override
     public Scalar mulRational(RationalScalar s) {
-        return new RationalScalar(this.number * s.getNumerator(), s.getDenominator());
+        return new RealScalar(this.number * (1.0*s.getNumerator()/s.getDenominator()));
     }
 
     @Override
     public Scalar mulReal(RealScalar s) {
-        return new RealScalar(this.number * s.getNumber());
+        return new RealScalar(this.number * s.number);
     }
 }
 
